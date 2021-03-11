@@ -13076,24 +13076,42 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Python and JSON Workshop -- Y. Rooseleer &lt;yvan@biasc.be&gt;</span>
+<span class="c1">### 22 example exercises friltering JSON, dict and list structures</span>
 <span class="c1">### Part 1: Filtering JSON Data</span>
 <span class="c1">### 1 ###</span>
 <span class="c1">### Managing IP Addresses with Python</span>
 <span class="c1">### json structure already converted to dict</span>
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="c1">### Data Structures</span>
+<span class="n">host</span>               <span class="o">=</span>  <span class="p">{</span><span class="s2">&quot;hostname&quot;</span> <span class="p">:</span> <span class="s2">&quot;CSR1kv&quot;</span><span class="p">}</span>
+<span class="n">multiple_hosts</span>     <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;hostname&quot;</span> <span class="p">:</span> <span class="s2">&quot;CSR1kv&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;hostname&quot;</span> <span class="p">:</span> <span class="s2">&quot;CSR2kv&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;hostname&quot;</span> <span class="p">:</span> <span class="s2">&quot;CSR3kv&quot;</span><span class="p">}]</span>
+<span class="n">multiple_hostnames</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;CSR1kv&quot;</span><span class="p">,</span> <span class="s2">&quot;CSR2kv&quot;</span><span class="p">,</span> <span class="s2">&quot;CSR3kv&quot;</span><span class="p">]</span>
 <span class="n">single_address</span>     <span class="o">=</span>  <span class="p">{</span><span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="s1">&#39;192.168.56.101&#39;</span><span class="p">,</span> <span class="s1">&#39;netmask&#39;</span><span class="p">:</span> <span class="s1">&#39;255.255.255.0&#39;</span><span class="p">}</span>
 <span class="n">multiple_addresses</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="s1">&#39;192.168.56.101&#39;</span><span class="p">,</span> <span class="s1">&#39;netmask&#39;</span><span class="p">:</span> <span class="s1">&#39;255.255.255.0&#39;</span><span class="p">},</span>
                       <span class="p">{</span><span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="s1">&#39;192.0.2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;netmask&#39;</span><span class="p">:</span> <span class="s1">&#39;255.255.255.252&#39;</span><span class="p">}</span> <span class="p">]</span>
-<span class="n">ietf_ipv4</span>          <span class="o">=</span>  <span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="s1">&#39;192.168.56.101&#39;</span><span class="p">,</span> <span class="s1">&#39;netmask&#39;</span><span class="p">:</span> <span class="s1">&#39;255.255.255.0&#39;</span><span class="p">}</span> <span class="p">,</span> <span class="p">{</span><span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="s1">&#39;192.0.2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;netmask&#39;</span><span class="p">:</span> <span class="s1">&#39;255.255.255.252&#39;</span><span class="p">}</span> <span class="p">]}</span>
-
+<span class="n">ietf_ipv4</span>          <span class="o">=</span>  <span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="s1">&#39;192.168.56.101&#39;</span><span class="p">,</span> <span class="s1">&#39;netmask&#39;</span><span class="p">:</span> <span class="s1">&#39;255.255.255.0&#39;</span><span class="p">}</span> <span class="p">,</span> 
+                                   <span class="p">{</span><span class="s1">&#39;ip&#39;</span><span class="p">:</span> <span class="s1">&#39;192.0.2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;netmask&#39;</span><span class="p">:</span> <span class="s1">&#39;255.255.255.252&#39;</span><span class="p">}</span> <span class="p">]}</span>
 <span class="c1">### Recognize Data Type</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----1------&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">host</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">multiple_hosts</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">multiple_hostnames</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----1B-----&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">host</span><span class="p">[</span><span class="s2">&quot;hostname&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">multiple_hosts</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">multiple_hosts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;hostname&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">multiple_hostnames</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----2------&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">single_address</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">multiple_addresses</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">ietf_ipv4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----2B-----&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ietf_ipv4</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ietf_ipv4</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;ip&#39;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ietf_ipv4</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;ip&#39;</span><span class="p">])</span>
 </pre></div>
@@ -13112,9 +13130,22 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;class &#39;dict&#39;&gt;
+<pre>-----1------
+&lt;class &#39;dict&#39;&gt;
+&lt;class &#39;list&#39;&gt;
+&lt;class &#39;list&#39;&gt;
+-----1B-----
+{&#39;hostname&#39;: &#39;CSR1kv&#39;}
+CSR1kv
+[{&#39;hostname&#39;: &#39;CSR1kv&#39;}, {&#39;hostname&#39;: &#39;CSR2kv&#39;}, {&#39;hostname&#39;: &#39;CSR3kv&#39;}]
+CSR3kv
+CSR3kv
+-----2------
+&lt;class &#39;dict&#39;&gt;
 &lt;class &#39;list&#39;&gt;
 &lt;class &#39;dict&#39;&gt;
+-----2B-----
+[{&#39;ip&#39;: &#39;192.168.56.101&#39;, &#39;netmask&#39;: &#39;255.255.255.0&#39;}, {&#39;ip&#39;: &#39;192.0.2.1&#39;, &#39;netmask&#39;: &#39;255.255.255.252&#39;}]
 192.168.56.101
 192.0.2.1
 </pre>
@@ -13127,7 +13158,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 2 ###</span>
@@ -13143,11 +13174,11 @@ div#notebook {
    <span class="p">}</span>
 
 <span class="c1"># example 1 -- using square brackets to select a key</span>
-<span class="n">subnet_mask_1</span> <span class="o">=</span> <span class="n">prefix_subnet_masks</span><span class="p">[</span><span class="s1">&#39;/23&#39;</span><span class="p">]</span>   
+<span class="n">subnet_mask_1</span> <span class="o">=</span> <span class="n">prefix_subnet_masks</span><span class="p">[</span><span class="s1">&#39;/25&#39;</span><span class="p">]</span>   
 <span class="nb">print</span><span class="p">(</span><span class="n">subnet_mask_1</span> <span class="p">)</span>    
 
 <span class="c1"># example 2 -- using get() function to select a key</span>
-<span class="n">subnet_mask_2</span> <span class="o">=</span> <span class="n">prefix_subnet_masks</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/23&#39;</span><span class="p">)</span>
+<span class="n">subnet_mask_2</span> <span class="o">=</span> <span class="n">prefix_subnet_masks</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/25&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">subnet_mask_2</span><span class="p">)</span>    
 </pre></div>
 
@@ -13165,8 +13196,8 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>255.255.254.0
-255.255.254.0
+<pre>255.255.255.128
+255.255.255.128
 </pre>
 </div>
 </div>
@@ -13225,7 +13256,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 4 ###</span>
@@ -13234,7 +13265,20 @@ div#notebook {
 <span class="c1">### Authentication header needed</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="c1">### json structure already converted to dict using the variable &quot;resp&quot;</span>
-<span class="n">resp</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ietf-interfaces:interfaces&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;GigabitEthernet1&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;VBox&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;iana-if-type:ethernetCsmacd&quot;</span><span class="p">,</span> <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;ietf-ip:ipv4&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;ip&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.56.101&quot;</span><span class="p">,</span> <span class="s2">&quot;netmask&quot;</span><span class="p">:</span> <span class="s2">&quot;255.255.255.0&quot;</span><span class="p">}]},</span> <span class="s2">&quot;ietf-ip:ipv6&quot;</span><span class="p">:</span> <span class="p">{}},</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Loopback9&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;999&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;iana-if-type:softwareLoopback&quot;</span><span class="p">,</span> <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;ietf-ip:ipv4&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;ip&quot;</span><span class="p">:</span> <span class="s2">&quot;10.9.9.9&quot;</span><span class="p">,</span> <span class="s2">&quot;netmask&quot;</span><span class="p">:</span> <span class="s2">&quot;255.255.255.0&quot;</span><span class="p">},{</span><span class="s2">&quot;ip&quot;</span><span class="p">:</span> <span class="s2">&quot;172.29.0.9&quot;</span><span class="p">,</span> <span class="s2">&quot;netmask&quot;</span><span class="p">:</span> <span class="s2">&quot;255.255.255.0&quot;</span><span class="p">}]},</span> <span class="s2">&quot;ietf-ip:ipv6&quot;</span><span class="p">:</span> <span class="p">{}}]}}</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ietf-interfaces:interfaces&quot;</span><span class="p">:</span> 
+        <span class="p">{</span><span class="s2">&quot;interface&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;GigabitEthernet1&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;VBox&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;iana-if-type:ethernetCsmacd&quot;</span><span class="p">,</span> <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> 
+             <span class="s2">&quot;ietf-ip:ipv4&quot;</span><span class="p">:</span> 
+             <span class="p">{</span><span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;ip&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.56.101&quot;</span><span class="p">,</span> <span class="s2">&quot;netmask&quot;</span><span class="p">:</span> <span class="s2">&quot;255.255.255.0&quot;</span><span class="p">}]},</span> 
+             <span class="s2">&quot;ietf-ip:ipv6&quot;</span><span class="p">:</span> <span class="p">{}},</span> 
+            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Loopback9&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;999&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;iana-if-type:softwareLoopback&quot;</span><span class="p">,</span> <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> 
+             <span class="s2">&quot;ietf-ip:ipv4&quot;</span><span class="p">:</span> 
+             <span class="p">{</span><span class="s2">&quot;address&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;ip&quot;</span><span class="p">:</span> <span class="s2">&quot;10.9.9.9&quot;</span><span class="p">,</span> <span class="s2">&quot;netmask&quot;</span><span class="p">:</span> <span class="s2">&quot;255.255.255.0&quot;</span><span class="p">},</span>
+                          <span class="p">{</span><span class="s2">&quot;ip&quot;</span><span class="p">:</span> <span class="s2">&quot;172.29.0.9&quot;</span><span class="p">,</span> <span class="s2">&quot;netmask&quot;</span><span class="p">:</span> <span class="s2">&quot;255.255.255.0&quot;</span><span class="p">}]},</span> <span class="s2">&quot;ietf-ip:ipv6&quot;</span><span class="p">:</span> <span class="p">{}</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+        <span class="p">}</span>
+       <span class="p">}</span>
 <span class="c1">#print(&quot; =&gt; Printing type of the response&quot;)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">resp</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; =&gt; Printing response keys&quot;</span><span class="p">)</span>
@@ -13331,7 +13375,7 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZTlkYmI3NzdjZDQ3ZTAwNGM2N2RkMGU
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 6 ###</span>
@@ -13368,19 +13412,18 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZTlkYmI3NzdjZDQ3ZTAwNGM2N2RkMGU
     <span class="k">if</span> <span class="n">device</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">dev_dict</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1">#create empty dict</span>
         <span class="n">dev_dict</span><span class="p">[</span><span class="s1">&#39;hostname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device</span><span class="p">[</span><span class="s1">&#39;hostname&#39;</span><span class="p">]</span>
-        <span class="c1">#dev_dict[&#39;type&#39;] = device[&#39;type&#39;]</span>
-        <span class="c1">#dev_dict[&#39;macAddress&#39;] = device[&#39;macAddress&#39;]</span>
         <span class="n">dev_dict</span><span class="p">[</span><span class="s1">&#39;managementIpAddress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device</span><span class="p">[</span><span class="s1">&#39;managementIpAddress&#39;</span><span class="p">]</span>
-        <span class="c1">#dev_dict[&#39;serialNumber&#39;] = device[&#39;serialNumber&#39;]</span>
         <span class="n">dev_dict</span><span class="p">[</span><span class="s1">&#39;softwareType&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device</span><span class="p">[</span><span class="s1">&#39;softwareType&#39;</span><span class="p">]</span>
         <span class="n">dev_dict</span><span class="p">[</span><span class="s1">&#39;softwareVersion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device</span><span class="p">[</span><span class="s1">&#39;softwareVersion&#39;</span><span class="p">]</span>
         <span class="n">dev_dict</span><span class="p">[</span><span class="s1">&#39;reachabilityStatus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">device</span><span class="p">[</span><span class="s1">&#39;reachabilityStatus&#39;</span><span class="p">]</span>
         <span class="n">dev_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dev_dict</span><span class="p">)</span>
 <span class="c1">#print(dev_dict)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------1--------&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Printing Keys&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">dev_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
 <span class="c1">#print(dir(dev_dict))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------2--------&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Printing Keys and Values&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">dev_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="s2">&quot; ==&gt; &quot;</span> <span class="o">+</span> <span class="n">v</span> <span class="p">)</span>
@@ -13400,12 +13443,14 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1ZTlkYmI3NzdjZDQ3ZTAwNGM2N2RkMGU
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Printing Keys
+<pre>--------1--------
+Printing Keys
 hostname
 managementIpAddress
 softwareType
 softwareVersion
 reachabilityStatus
+--------2--------
 Printing Keys and Values
 hostname ==&gt; cat_9k_1
 managementIpAddress ==&gt; 10.10.22.66
@@ -13552,7 +13597,7 @@ Ansible Distribution Version: 20.04
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 10 ###</span>
@@ -15075,7 +15120,7 @@ Ansible Distribution Version: 20.04
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 11 ###</span>
@@ -15121,7 +15166,7 @@ Converting dict to raw json
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 12 ###</span>
@@ -15537,7 +15582,7 @@ bridge
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 17 ###</span>
@@ -15549,7 +15594,7 @@ bridge
       <span class="p">{</span> <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;group_id&quot;</span><span class="p">:</span> <span class="s2">&quot;G-A&quot;</span> 
                  <span class="p">,</span> <span class="s2">&quot;group_name&quot;</span><span class="p">:</span> <span class="s2">&quot;DEVASC_A&quot;</span> <span class="p">,</span>    
                    <span class="s2">&quot;members&quot;</span><span class="p">:</span> <span class="p">[</span>   
-                     <span class="p">{</span><span class="s2">&quot;person_id&quot;</span><span class="p">:</span> <span class="s2">&quot;P-1&quot;</span> <span class="p">,</span> <span class="s2">&quot;person_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Nico&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;nico@odisee.be&quot;</span><span class="p">},</span>
+                     <span class="p">{</span><span class="s2">&quot;person_id&quot;</span><span class="p">:</span> <span class="s2">&quot;P-1&quot;</span> <span class="p">,</span> <span class="s2">&quot;person_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Nick&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;nick@odisee.be&quot;</span><span class="p">},</span>
                      <span class="p">{</span><span class="s2">&quot;person_id&quot;</span><span class="p">:</span> <span class="s2">&quot;P-2&quot;</span> <span class="p">,</span> <span class="s2">&quot;person_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Mary&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;mary@odisee.be&quot;</span><span class="p">},</span>
                      <span class="p">{</span><span class="s2">&quot;person_id&quot;</span><span class="p">:</span> <span class="s2">&quot;P-3&quot;</span> <span class="p">,</span> <span class="s2">&quot;person_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Jens&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;jens@odisee.be&quot;</span><span class="p">}</span> 
                    <span class="p">]</span>
@@ -15597,7 +15642,7 @@ bridge
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>First group, First person
-DEVASC_A =&gt; Nico
+DEVASC_A =&gt; Nick
 Second group, First person
 DEVASC_B =&gt; Ives
 </pre>
@@ -15610,7 +15655,7 @@ DEVASC_B =&gt; Ives
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 18 ###</span>
@@ -15622,7 +15667,7 @@ DEVASC_B =&gt; Ives
       <span class="p">{</span> <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;group_id&quot;</span><span class="p">:</span> <span class="s2">&quot;G-A&quot;</span> 
                  <span class="p">,</span> <span class="s2">&quot;group_name&quot;</span><span class="p">:</span> <span class="s2">&quot;DEVASC_A&quot;</span> <span class="p">,</span>    
                    <span class="s2">&quot;members&quot;</span><span class="p">:</span> <span class="p">[</span>   
-                     <span class="p">{</span><span class="s2">&quot;person_id&quot;</span><span class="p">:</span> <span class="s2">&quot;P-1&quot;</span> <span class="p">,</span> <span class="s2">&quot;person_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Noel&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;noel@odisee.be&quot;</span><span class="p">},</span>
+                     <span class="p">{</span><span class="s2">&quot;person_id&quot;</span><span class="p">:</span> <span class="s2">&quot;P-1&quot;</span> <span class="p">,</span> <span class="s2">&quot;person_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Nick&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;nick@odisee.be&quot;</span><span class="p">},</span>
                      <span class="p">{</span><span class="s2">&quot;person_id&quot;</span><span class="p">:</span> <span class="s2">&quot;P-2&quot;</span> <span class="p">,</span> <span class="s2">&quot;person_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Mary&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;mary@odisee.be&quot;</span><span class="p">},</span>
                      <span class="p">{</span><span class="s2">&quot;person_id&quot;</span><span class="p">:</span> <span class="s2">&quot;P-3&quot;</span> <span class="p">,</span> <span class="s2">&quot;person_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Jens&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;jens@odisee.be&quot;</span><span class="p">}</span> 
                    <span class="p">]</span>
@@ -15662,7 +15707,7 @@ DEVASC_B =&gt; Ives
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>DEVASC_A
-Noel =&gt; noel@odisee.be
+Nick =&gt; nick@odisee.be
 Mary =&gt; mary@odisee.be
 Jens =&gt; jens@odisee.be
 DEVASC_B
@@ -15731,6 +15776,407 @@ Alec =&gt; alec@odisee.be
 GigabitEthernet1 =&gt; 10.0.1.1
 GigabitEthernet2 =&gt; 10.0.3.1
 GigabitEthernet3 =&gt; 10.0.4.1
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 20 ### Newly added data structure</span>
+<span class="c1">### Subnetting Dict Example - Class C network divided in 4 subnets</span>
+<span class="c1">### Example</span>
+<span class="n">subnet_struc</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;subnets&quot;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s2">&quot;subnet&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;subnet_number&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;subnet_address&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;first_host&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;last_host&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.62&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;broadcast_address&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.63&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;subnet&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;subnet_number&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;subnet_address&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.64&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;first_host&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.65&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;last_host&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.126&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;broadcast_address&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.127&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;subnet&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;subnet_number&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;subnet_address&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.128&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;first_host&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.129&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;last_host&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.190&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;broadcast_address&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.191&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;subnet&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;subnet_number&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;subnet_address&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.192&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;first_host&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.193&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;last_host&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.254&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;broadcast_address&quot;</span><span class="p">:</span> <span class="s2">&quot;192.168.0.255&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">subnet_struc</span><span class="p">))</span>
+<span class="c1">#print(subnet_struc)</span>
+<span class="c1">###</span>
+<span class="c1">### select information about a specific subnet</span>
+<span class="n">selected_subnet</span> <span class="o">=</span> <span class="mi">0</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">subnet_struc</span><span class="p">[</span><span class="s2">&quot;subnets&quot;</span><span class="p">][</span><span class="n">selected_subnet</span><span class="p">][</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;subnet_number&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">subnet_struc</span><span class="p">[</span><span class="s2">&quot;subnets&quot;</span><span class="p">][</span><span class="n">selected_subnet</span><span class="p">][</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;subnet_address&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">subnet_struc</span><span class="p">[</span><span class="s2">&quot;subnets&quot;</span><span class="p">][</span><span class="n">selected_subnet</span><span class="p">][</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;first_host&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">subnet_struc</span><span class="p">[</span><span class="s2">&quot;subnets&quot;</span><span class="p">][</span><span class="n">selected_subnet</span><span class="p">][</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;last_host&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">subnet_struc</span><span class="p">[</span><span class="s2">&quot;subnets&quot;</span><span class="p">][</span><span class="n">selected_subnet</span><span class="p">][</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;broadcast_address&quot;</span><span class="p">])</span>
+<span class="c1">###</span>
+<span class="c1">### loop through all subnets</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">subnet_struc</span><span class="p">[</span><span class="s2">&quot;subnets&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;subnet_number&quot;</span><span class="p">]</span> 
+          <span class="o">+</span> <span class="s2">&quot; =&gt; &quot;</span> <span class="o">+</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;subnet_address&quot;</span><span class="p">]</span>
+          <span class="o">+</span> <span class="s2">&quot; =&gt; &quot;</span> <span class="o">+</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;first_host&quot;</span><span class="p">]</span>
+          <span class="o">+</span> <span class="s2">&quot; =&gt; &quot;</span> <span class="o">+</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;last_host&quot;</span><span class="p">]</span>
+          <span class="o">+</span> <span class="s2">&quot; =&gt; &quot;</span> <span class="o">+</span> <span class="n">n</span><span class="p">[</span><span class="s2">&quot;subnet&quot;</span><span class="p">][</span><span class="s2">&quot;broadcast_address&quot;</span><span class="p">]</span>
+         <span class="p">)</span>
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class &#39;dict&#39;&gt;
+0
+192.168.0.0
+192.168.0.1
+192.168.0.62
+192.168.0.63
+0 =&gt; 192.168.0.0 =&gt; 192.168.0.1 =&gt; 192.168.0.62 =&gt; 192.168.0.63
+1 =&gt; 192.168.0.64 =&gt; 192.168.0.65 =&gt; 192.168.0.126 =&gt; 192.168.0.127
+2 =&gt; 192.168.0.128 =&gt; 192.168.0.129 =&gt; 192.168.0.190 =&gt; 192.168.0.191
+3 =&gt; 192.168.0.192 =&gt; 192.168.0.193 =&gt; 192.168.0.254 =&gt; 192.168.0.255
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 21 ### Newly added: Googel Geolocation response data </span>
+<span class="c1">### Response data from Google Geolocation</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;address_components&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Halle&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Halle&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;locality&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Flemish Brabant&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;VB&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;administrative_area_level_2&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Flanders&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Flanders&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;administrative_area_level_1&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Belgium&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;BE&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]}],</span> <span class="s1">&#39;formatted_address&#39;</span><span class="p">:</span> <span class="s1">&#39;Halle, Belgium&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;northeast&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.7785199</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.31185</span><span class="p">},</span> <span class="s1">&#39;southwest&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.68936</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.17231</span><span class="p">}},</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.73757</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.23251</span><span class="p">},</span> <span class="s1">&#39;location_type&#39;</span><span class="p">:</span> <span class="s1">&#39;APPROXIMATE&#39;</span><span class="p">,</span> <span class="s1">&#39;viewport&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;northeast&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.7785199</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.31185</span><span class="p">},</span> <span class="s1">&#39;southwest&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.68936</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.17231</span><span class="p">}}},</span> <span class="s1">&#39;place_id&#39;</span><span class="p">:</span> <span class="s1">&#39;ChIJR3tSDfjIw0cR6DrZHBsfLcE&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;locality&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]}],</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;OK&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------1--------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">resp</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------2--------&quot;</span><span class="p">)</span>
+<span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">json_data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------3--------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>------1--------
+&lt;class &#39;dict&#39;&gt;
+------2--------
+&lt;class &#39;str&#39;&gt;
+------3--------
+{
+  &#34;results&#34;: [
+    {
+      &#34;address_components&#34;: [
+        {
+          &#34;long_name&#34;: &#34;Halle&#34;,
+          &#34;short_name&#34;: &#34;Halle&#34;,
+          &#34;types&#34;: [
+            &#34;locality&#34;,
+            &#34;political&#34;
+          ]
+        },
+        {
+          &#34;long_name&#34;: &#34;Flemish Brabant&#34;,
+          &#34;short_name&#34;: &#34;VB&#34;,
+          &#34;types&#34;: [
+            &#34;administrative_area_level_2&#34;,
+            &#34;political&#34;
+          ]
+        },
+        {
+          &#34;long_name&#34;: &#34;Flanders&#34;,
+          &#34;short_name&#34;: &#34;Flanders&#34;,
+          &#34;types&#34;: [
+            &#34;administrative_area_level_1&#34;,
+            &#34;political&#34;
+          ]
+        },
+        {
+          &#34;long_name&#34;: &#34;Belgium&#34;,
+          &#34;short_name&#34;: &#34;BE&#34;,
+          &#34;types&#34;: [
+            &#34;country&#34;,
+            &#34;political&#34;
+          ]
+        }
+      ],
+      &#34;formatted_address&#34;: &#34;Halle, Belgium&#34;,
+      &#34;geometry&#34;: {
+        &#34;bounds&#34;: {
+          &#34;northeast&#34;: {
+            &#34;lat&#34;: 50.7785199,
+            &#34;lng&#34;: 4.31185
+          },
+          &#34;southwest&#34;: {
+            &#34;lat&#34;: 50.68936,
+            &#34;lng&#34;: 4.17231
+          }
+        },
+        &#34;location&#34;: {
+          &#34;lat&#34;: 50.73757,
+          &#34;lng&#34;: 4.23251
+        },
+        &#34;location_type&#34;: &#34;APPROXIMATE&#34;,
+        &#34;viewport&#34;: {
+          &#34;northeast&#34;: {
+            &#34;lat&#34;: 50.7785199,
+            &#34;lng&#34;: 4.31185
+          },
+          &#34;southwest&#34;: {
+            &#34;lat&#34;: 50.68936,
+            &#34;lng&#34;: 4.17231
+          }
+        }
+      },
+      &#34;place_id&#34;: &#34;ChIJR3tSDfjIw0cR6DrZHBsfLcE&#34;,
+      &#34;types&#34;: [
+        &#34;locality&#34;,
+        &#34;political&#34;
+      ]
+    }
+  ],
+  &#34;status&#34;: &#34;OK&#34;
+}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### 22 ### Newly added: Googel Geolocation response data </span>
+<span class="c1">### Response data from Google Geolocation</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;address_components&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Namur&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Namur&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;locality&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Province of Namur&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;NA&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;administrative_area_level_2&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Wallonia&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Wallonia&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;administrative_area_level_1&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Belgium&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;BE&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]}],</span> <span class="s1">&#39;formatted_address&#39;</span><span class="p">:</span> <span class="s1">&#39;Namur, Belgium&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;northeast&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.5312201</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.98398</span><span class="p">},</span> <span class="s1">&#39;southwest&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.38738</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.7229</span><span class="p">}},</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.4673883</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.8719854</span><span class="p">},</span> <span class="s1">&#39;location_type&#39;</span><span class="p">:</span> <span class="s1">&#39;APPROXIMATE&#39;</span><span class="p">,</span> <span class="s1">&#39;viewport&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;northeast&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.5312201</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.98398</span><span class="p">},</span> <span class="s1">&#39;southwest&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.38738</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.7229</span><span class="p">}}},</span> <span class="s1">&#39;place_id&#39;</span><span class="p">:</span> <span class="s1">&#39;ChIJP2UsDG2ZwUcRBVIWxLYmVsE&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;locality&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;address_components&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Province of Namur&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;NA&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;administrative_area_level_2&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Wallonia&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Wallonia&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;administrative_area_level_1&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Belgium&#39;</span><span class="p">,</span> <span class="s1">&#39;short_name&#39;</span><span class="p">:</span> <span class="s1">&#39;BE&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]}],</span> <span class="s1">&#39;formatted_address&#39;</span><span class="p">:</span> <span class="s1">&#39;Province of Namur, Belgium&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;northeast&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.64833</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">5.4025</span><span class="p">},</span> <span class="s1">&#39;southwest&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">49.78548000000001</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.28589</span><span class="p">}},</span> <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.3310218</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.8221456</span><span class="p">},</span> <span class="s1">&#39;location_type&#39;</span><span class="p">:</span> <span class="s1">&#39;APPROXIMATE&#39;</span><span class="p">,</span> <span class="s1">&#39;viewport&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;northeast&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.64833</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">5.4025</span><span class="p">},</span> <span class="s1">&#39;southwest&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">49.78548000000001</span><span class="p">,</span> <span class="s1">&#39;lng&#39;</span><span class="p">:</span> <span class="mf">4.28589</span><span class="p">}}},</span> <span class="s1">&#39;place_id&#39;</span><span class="p">:</span> <span class="s1">&#39;ChIJGVmGENGUwUcRorXKNtkQZS0&#39;</span><span class="p">,</span> <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;administrative_area_level_2&#39;</span><span class="p">,</span> <span class="s1">&#39;political&#39;</span><span class="p">]}],</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;OK&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------1--------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">resp</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------2--------&quot;</span><span class="p">)</span>
+<span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">json_data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------3--------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>------1--------
+&lt;class &#39;dict&#39;&gt;
+------2--------
+&lt;class &#39;str&#39;&gt;
+------3--------
+{
+  &#34;results&#34;: [
+    {
+      &#34;address_components&#34;: [
+        {
+          &#34;long_name&#34;: &#34;Namur&#34;,
+          &#34;short_name&#34;: &#34;Namur&#34;,
+          &#34;types&#34;: [
+            &#34;locality&#34;,
+            &#34;political&#34;
+          ]
+        },
+        {
+          &#34;long_name&#34;: &#34;Province of Namur&#34;,
+          &#34;short_name&#34;: &#34;NA&#34;,
+          &#34;types&#34;: [
+            &#34;administrative_area_level_2&#34;,
+            &#34;political&#34;
+          ]
+        },
+        {
+          &#34;long_name&#34;: &#34;Wallonia&#34;,
+          &#34;short_name&#34;: &#34;Wallonia&#34;,
+          &#34;types&#34;: [
+            &#34;administrative_area_level_1&#34;,
+            &#34;political&#34;
+          ]
+        },
+        {
+          &#34;long_name&#34;: &#34;Belgium&#34;,
+          &#34;short_name&#34;: &#34;BE&#34;,
+          &#34;types&#34;: [
+            &#34;country&#34;,
+            &#34;political&#34;
+          ]
+        }
+      ],
+      &#34;formatted_address&#34;: &#34;Namur, Belgium&#34;,
+      &#34;geometry&#34;: {
+        &#34;bounds&#34;: {
+          &#34;northeast&#34;: {
+            &#34;lat&#34;: 50.5312201,
+            &#34;lng&#34;: 4.98398
+          },
+          &#34;southwest&#34;: {
+            &#34;lat&#34;: 50.38738,
+            &#34;lng&#34;: 4.7229
+          }
+        },
+        &#34;location&#34;: {
+          &#34;lat&#34;: 50.4673883,
+          &#34;lng&#34;: 4.8719854
+        },
+        &#34;location_type&#34;: &#34;APPROXIMATE&#34;,
+        &#34;viewport&#34;: {
+          &#34;northeast&#34;: {
+            &#34;lat&#34;: 50.5312201,
+            &#34;lng&#34;: 4.98398
+          },
+          &#34;southwest&#34;: {
+            &#34;lat&#34;: 50.38738,
+            &#34;lng&#34;: 4.7229
+          }
+        }
+      },
+      &#34;place_id&#34;: &#34;ChIJP2UsDG2ZwUcRBVIWxLYmVsE&#34;,
+      &#34;types&#34;: [
+        &#34;locality&#34;,
+        &#34;political&#34;
+      ]
+    },
+    {
+      &#34;address_components&#34;: [
+        {
+          &#34;long_name&#34;: &#34;Province of Namur&#34;,
+          &#34;short_name&#34;: &#34;NA&#34;,
+          &#34;types&#34;: [
+            &#34;administrative_area_level_2&#34;,
+            &#34;political&#34;
+          ]
+        },
+        {
+          &#34;long_name&#34;: &#34;Wallonia&#34;,
+          &#34;short_name&#34;: &#34;Wallonia&#34;,
+          &#34;types&#34;: [
+            &#34;administrative_area_level_1&#34;,
+            &#34;political&#34;
+          ]
+        },
+        {
+          &#34;long_name&#34;: &#34;Belgium&#34;,
+          &#34;short_name&#34;: &#34;BE&#34;,
+          &#34;types&#34;: [
+            &#34;country&#34;,
+            &#34;political&#34;
+          ]
+        }
+      ],
+      &#34;formatted_address&#34;: &#34;Province of Namur, Belgium&#34;,
+      &#34;geometry&#34;: {
+        &#34;bounds&#34;: {
+          &#34;northeast&#34;: {
+            &#34;lat&#34;: 50.64833,
+            &#34;lng&#34;: 5.4025
+          },
+          &#34;southwest&#34;: {
+            &#34;lat&#34;: 49.78548000000001,
+            &#34;lng&#34;: 4.28589
+          }
+        },
+        &#34;location&#34;: {
+          &#34;lat&#34;: 50.3310218,
+          &#34;lng&#34;: 4.8221456
+        },
+        &#34;location_type&#34;: &#34;APPROXIMATE&#34;,
+        &#34;viewport&#34;: {
+          &#34;northeast&#34;: {
+            &#34;lat&#34;: 50.64833,
+            &#34;lng&#34;: 5.4025
+          },
+          &#34;southwest&#34;: {
+            &#34;lat&#34;: 49.78548000000001,
+            &#34;lng&#34;: 4.28589
+          }
+        }
+      },
+      &#34;place_id&#34;: &#34;ChIJGVmGENGUwUcRorXKNtkQZS0&#34;,
+      &#34;types&#34;: [
+        &#34;administrative_area_level_2&#34;,
+        &#34;political&#34;
+      ]
+    }
+  ],
+  &#34;status&#34;: &#34;OK&#34;
+}
 </pre>
 </div>
 </div>

@@ -1,29 +1,47 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[7]:
+# In[19]:
 
 
 ### Python and JSON Workshop -- Y. Rooseleer <yvan@biasc.be>
+### 22 example exercises friltering JSON, dict and list structures
 ### Part 1: Filtering JSON Data
 ### 1 ###
 ### Managing IP Addresses with Python
 ### json structure already converted to dict
+import json
 ### Data Structures
+host               =  {"hostname" : "CSR1kv"}
+multiple_hosts     = [{"hostname" : "CSR1kv"}, {"hostname" : "CSR2kv"}, {"hostname" : "CSR3kv"}]
+multiple_hostnames = [ "CSR1kv", "CSR2kv", "CSR3kv"]
 single_address     =  {'ip': '192.168.56.101', 'netmask': '255.255.255.0'}
 multiple_addresses = [{'ip': '192.168.56.101', 'netmask': '255.255.255.0'},
                       {'ip': '192.0.2.1', 'netmask': '255.255.255.252'} ]
-ietf_ipv4          =  {'address': [{'ip': '192.168.56.101', 'netmask': '255.255.255.0'} , {'ip': '192.0.2.1', 'netmask': '255.255.255.252'} ]}
-
+ietf_ipv4          =  {'address': [{'ip': '192.168.56.101', 'netmask': '255.255.255.0'} , 
+                                   {'ip': '192.0.2.1', 'netmask': '255.255.255.252'} ]}
 ### Recognize Data Type
+print('-----1------')
+print(type(host))
+print(type(multiple_hosts))
+print(type(multiple_hostnames))
+print('-----1B-----')
+print(host)
+print(host["hostname"])
+print(multiple_hosts)
+print(multiple_hosts[-1]["hostname"])
+print(multiple_hostnames[-1])
+print('-----2------')
 print(type(single_address))
 print(type(multiple_addresses))
 print(type(ietf_ipv4))
+print('-----2B-----')
+print(ietf_ipv4['address'])
 print(ietf_ipv4['address'][0]['ip'])
 print(ietf_ipv4['address'][1]['ip'])
 
 
-# In[26]:
+# In[21]:
 
 
 ### 2 ###
@@ -39,11 +57,11 @@ prefix_subnet_masks = {
    }
 
 # example 1 -- using square brackets to select a key
-subnet_mask_1 = prefix_subnet_masks['/23']   
+subnet_mask_1 = prefix_subnet_masks['/25']   
 print(subnet_mask_1 )    
 
 # example 2 -- using get() function to select a key
-subnet_mask_2 = prefix_subnet_masks.get('/23')
+subnet_mask_2 = prefix_subnet_masks.get('/25')
 print(subnet_mask_2)    
 
 
@@ -70,7 +88,7 @@ Prefix_1 = netmask_prefixes['255.255.255.224']
 print(Prefix_1)    
 
 
-# In[28]:
+# In[24]:
 
 
 ### 4 ###
@@ -79,7 +97,20 @@ print(Prefix_1)
 ### Authentication header needed
 import json
 ### json structure already converted to dict using the variable "resp"
-resp = {"ietf-interfaces:interfaces": {"interface": [{"name": "GigabitEthernet1", "description": "VBox", "type": "iana-if-type:ethernetCsmacd", "enabled": True, "ietf-ip:ipv4": {"address": [{"ip": "192.168.56.101", "netmask": "255.255.255.0"}]}, "ietf-ip:ipv6": {}}, {"name": "Loopback9", "description": "999", "type": "iana-if-type:softwareLoopback", "enabled": True, "ietf-ip:ipv4": {"address": [{"ip": "10.9.9.9", "netmask": "255.255.255.0"},{"ip": "172.29.0.9", "netmask": "255.255.255.0"}]}, "ietf-ip:ipv6": {}}]}}
+resp = {"ietf-interfaces:interfaces": 
+        {"interface": [
+            {"name": "GigabitEthernet1", "description": "VBox", "type": "iana-if-type:ethernetCsmacd", "enabled": True, 
+             "ietf-ip:ipv4": 
+             {"address": [{"ip": "192.168.56.101", "netmask": "255.255.255.0"}]}, 
+             "ietf-ip:ipv6": {}}, 
+            {"name": "Loopback9", "description": "999", "type": "iana-if-type:softwareLoopback", "enabled": True, 
+             "ietf-ip:ipv4": 
+             {"address": [{"ip": "10.9.9.9", "netmask": "255.255.255.0"},
+                          {"ip": "172.29.0.9", "netmask": "255.255.255.0"}]}, "ietf-ip:ipv6": {}
+            }
+        ]
+        }
+       }
 #print(" => Printing type of the response")
 print(type(resp))
 print(" => Printing response keys")
@@ -114,7 +145,7 @@ print(len(token))
 print(token)
 
 
-# In[30]:
+# In[1]:
 
 
 ### 6 ###
@@ -151,19 +182,18 @@ for device  in resp['response']:
     if device['type'] != None:
         dev_dict = {} #create empty dict
         dev_dict['hostname'] = device['hostname']
-        #dev_dict['type'] = device['type']
-        #dev_dict['macAddress'] = device['macAddress']
         dev_dict['managementIpAddress'] = device['managementIpAddress']
-        #dev_dict['serialNumber'] = device['serialNumber']
         dev_dict['softwareType'] = device['softwareType']
         dev_dict['softwareVersion'] = device['softwareVersion']
         dev_dict['reachabilityStatus'] = device['reachabilityStatus']
         dev_list.append(dev_dict)
 #print(dev_dict)
+print('--------1--------')
 print("Printing Keys")
 for k in dev_dict.keys():
     print(k)
 #print(dir(dev_dict))
+print('--------2--------')
 print("Printing Keys and Values")
 for k,v in dev_dict.items():
     print(k + " ==> " + v )
@@ -214,7 +244,7 @@ print("Ansible Distribution Release: "  + resp["ansible_facts"]["ansible_distrib
 print("Ansible Distribution Version: "  + resp["ansible_facts"]["ansible_distribution_version"])
 
 
-# In[34]:
+# In[2]:
 
 
 ### 10 ###
@@ -232,7 +262,7 @@ with open('ansible_gather_facts.json', 'r') as file:
 print("DATA FROM FILE: " + ansible_json_doc)
 
 
-# In[35]:
+# In[2]:
 
 
 ### 11 ###
@@ -248,7 +278,7 @@ ansible_json = json.dumps(ansible_dict)
 print(ansible_json)
 
 
-# In[37]:
+# In[3]:
 
 
 ### 12 ###
@@ -357,7 +387,7 @@ print(docker_dict2[0]["Created"])
 print(docker_dict2[0]["Containers"]["4e99a64e10dfcf6608a1d47f4349676c745bf234cebd52826d786db9a3be2811"]["IPv4Address"])
 
 
-# In[42]:
+# In[25]:
 
 
 ### 17 ###
@@ -369,7 +399,7 @@ groups_struc = {
       { "group": { "group_id": "G-A" 
                  , "group_name": "DEVASC_A" ,    
                    "members": [   
-                     {"person_id": "P-1" , "person_name": "Nico", "email": "nico@odisee.be"},
+                     {"person_id": "P-1" , "person_name": "Nick", "email": "nick@odisee.be"},
                      {"person_id": "P-2" , "person_name": "Mary", "email": "mary@odisee.be"},
                      {"person_id": "P-3" , "person_name": "Jens", "email": "jens@odisee.be"} 
                    ]
@@ -402,7 +432,7 @@ print("Second group, First person")
 print(resp_b1 + " => " + resp_b2)
 
 
-# In[43]:
+# In[26]:
 
 
 ### 18 ###
@@ -414,7 +444,7 @@ groups_struc = {
       { "group": { "group_id": "G-A" 
                  , "group_name": "DEVASC_A" ,    
                    "members": [   
-                     {"person_id": "P-1" , "person_name": "Noel", "email": "noel@odisee.be"},
+                     {"person_id": "P-1" , "person_name": "Nick", "email": "nick@odisee.be"},
                      {"person_id": "P-2" , "person_name": "Mary", "email": "mary@odisee.be"},
                      {"person_id": "P-3" , "person_name": "Jens", "email": "jens@odisee.be"} 
                    ]
@@ -471,4 +501,104 @@ for g in rack_struc["rack"]:
     print(g["device"]["dev_name"])
     for p in g["device"]["interfaces"]:
         print(p["interface"]+" => "+p["ipaddress"])
+
+
+# In[25]:
+
+
+### 20 ### Newly added data structure
+### Subnetting Dict Example - Class C network divided in 4 subnets
+### Example
+subnet_struc = {
+    "subnets": [{
+            "subnet": {
+                "subnet_number": "0",
+                "subnet_address": "192.168.0.0",
+                "first_host": "192.168.0.1",
+                "last_host": "192.168.0.62",
+                "broadcast_address": "192.168.0.63"
+            }
+        },
+        {
+            "subnet": {
+                "subnet_number": "1",
+                "subnet_address": "192.168.0.64",
+                "first_host": "192.168.0.65",
+                "last_host": "192.168.0.126",
+                "broadcast_address": "192.168.0.127"
+            }
+        },
+        {
+            "subnet": {
+                "subnet_number": "2",
+                "subnet_address": "192.168.0.128",
+                "first_host": "192.168.0.129",
+                "last_host": "192.168.0.190",
+                "broadcast_address": "192.168.0.191"
+            }
+        },
+        {
+            "subnet": {
+                "subnet_number": "3",
+                "subnet_address": "192.168.0.192",
+                "first_host": "192.168.0.193",
+                "last_host": "192.168.0.254",
+                "broadcast_address": "192.168.0.255"
+            }
+        }
+        ]
+}
+
+print(type(subnet_struc))
+#print(subnet_struc)
+###
+### select information about a specific subnet
+selected_subnet = 0 
+print(subnet_struc["subnets"][selected_subnet]["subnet"]["subnet_number"])
+print(subnet_struc["subnets"][selected_subnet]["subnet"]["subnet_address"])
+print(subnet_struc["subnets"][selected_subnet]["subnet"]["first_host"])
+print(subnet_struc["subnets"][selected_subnet]["subnet"]["last_host"])
+print(subnet_struc["subnets"][selected_subnet]["subnet"]["broadcast_address"])
+###
+### loop through all subnets
+for n in subnet_struc["subnets"]:
+    print(n["subnet"]["subnet_number"] 
+          + " => " + n["subnet"]["subnet_address"]
+          + " => " + n["subnet"]["first_host"]
+          + " => " + n["subnet"]["last_host"]
+          + " => " + n["subnet"]["broadcast_address"]
+         )
+    
+
+
+# In[12]:
+
+
+### 21 ### Newly added: Googel Geolocation response data 
+### Response data from Google Geolocation
+import json
+resp = {'results': [{'address_components': [{'long_name': 'Halle', 'short_name': 'Halle', 'types': ['locality', 'political']}, {'long_name': 'Flemish Brabant', 'short_name': 'VB', 'types': ['administrative_area_level_2', 'political']}, {'long_name': 'Flanders', 'short_name': 'Flanders', 'types': ['administrative_area_level_1', 'political']}, {'long_name': 'Belgium', 'short_name': 'BE', 'types': ['country', 'political']}], 'formatted_address': 'Halle, Belgium', 'geometry': {'bounds': {'northeast': {'lat': 50.7785199, 'lng': 4.31185}, 'southwest': {'lat': 50.68936, 'lng': 4.17231}}, 'location': {'lat': 50.73757, 'lng': 4.23251}, 'location_type': 'APPROXIMATE', 'viewport': {'northeast': {'lat': 50.7785199, 'lng': 4.31185}, 'southwest': {'lat': 50.68936, 'lng': 4.17231}}}, 'place_id': 'ChIJR3tSDfjIw0cR6DrZHBsfLcE', 'types': ['locality', 'political']}], 'status': 'OK'}
+print("------1--------")
+print(type(resp))
+print("------2--------")
+json_data = json.dumps(resp, indent=2)
+print(type(json_data))
+print("------3--------")
+print(json_data)
+
+
+# In[13]:
+
+
+### 22 ### Newly added: Googel Geolocation response data 
+### Response data from Google Geolocation
+import json
+resp = {'results': [{'address_components': [{'long_name': 'Namur', 'short_name': 'Namur', 'types': ['locality', 'political']}, {'long_name': 'Province of Namur', 'short_name': 'NA', 'types': ['administrative_area_level_2', 'political']}, {'long_name': 'Wallonia', 'short_name': 'Wallonia', 'types': ['administrative_area_level_1', 'political']}, {'long_name': 'Belgium', 'short_name': 'BE', 'types': ['country', 'political']}], 'formatted_address': 'Namur, Belgium', 'geometry': {'bounds': {'northeast': {'lat': 50.5312201, 'lng': 4.98398}, 'southwest': {'lat': 50.38738, 'lng': 4.7229}}, 'location': {'lat': 50.4673883, 'lng': 4.8719854}, 'location_type': 'APPROXIMATE', 'viewport': {'northeast': {'lat': 50.5312201, 'lng': 4.98398}, 'southwest': {'lat': 50.38738, 'lng': 4.7229}}}, 'place_id': 'ChIJP2UsDG2ZwUcRBVIWxLYmVsE', 'types': ['locality', 'political']}, {'address_components': [{'long_name': 'Province of Namur', 'short_name': 'NA', 'types': ['administrative_area_level_2', 'political']}, {'long_name': 'Wallonia', 'short_name': 'Wallonia', 'types': ['administrative_area_level_1', 'political']}, {'long_name': 'Belgium', 'short_name': 'BE', 'types': ['country', 'political']}], 'formatted_address': 'Province of Namur, Belgium', 'geometry': {'bounds': {'northeast': {'lat': 50.64833, 'lng': 5.4025}, 'southwest': {'lat': 49.78548000000001, 'lng': 4.28589}}, 'location': {'lat': 50.3310218, 'lng': 4.8221456}, 'location_type': 'APPROXIMATE', 'viewport': {'northeast': {'lat': 50.64833, 'lng': 5.4025}, 'southwest': {'lat': 49.78548000000001, 'lng': 4.28589}}}, 'place_id': 'ChIJGVmGENGUwUcRorXKNtkQZS0', 'types': ['administrative_area_level_2', 'political']}], 'status': 'OK'}
+print("------1--------")
+print(type(resp))
+print("------2--------")
+json_data = json.dumps(resp, indent=2)
+print(type(json_data))
+print("------3--------")
+print(json_data)
 
